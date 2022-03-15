@@ -1,5 +1,5 @@
 require('./bootstrap');
-
+require('./components/example.js')
 import React from 'react';
 import { render } from 'react-dom';
 import { createInertiaApp } from '@inertiajs/inertia-react';
