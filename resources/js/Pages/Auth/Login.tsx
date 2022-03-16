@@ -9,19 +9,23 @@ import JetCheckbox from '@/Jetstream/Checkbox';
 import JetInput from '@/Jetstream/Input';
 import JetLabel from '@/Jetstream/Label';
 import JetValidationErrors from '@/Jetstream/ValidationErrors';
+import ReactDOM from 'react-dom';
 
 interface Props {
   canResetPassword: boolean;
   status: string;
 }
 
+
 export default function Login({ canResetPassword, status }: Props) {
   const route = useRoute();
+
   const form = useForm({
     email: '',
     password: '',
     remember: '',
   });
+
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -31,6 +35,7 @@ export default function Login({ canResetPassword, status }: Props) {
   }
 
   return (
+    
     <JetAuthenticationCard>
       <Head title="login" />
 
@@ -111,4 +116,7 @@ export default function Login({ canResetPassword, status }: Props) {
       </form>
     </JetAuthenticationCard>
   );
+  
 }
+
+
