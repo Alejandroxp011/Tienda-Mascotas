@@ -55,7 +55,7 @@ export default function Login({ canResetPassword, status }: Props) {
         </div>
 
         <div className="mt-4">
-          <JetLabel htmlFor="password">Password</JetLabel>
+          <JetLabel htmlFor="password">Contraseña</JetLabel>
           <JetInput
             id="password"
             type="password"
@@ -76,7 +76,7 @@ export default function Login({ canResetPassword, status }: Props) {
                 form.setData('remember', e.currentTarget.checked ? 'on' : '')
               }
             />
-            <span className="ml-2 text-sm text-gray-600">Remember me</span>
+            <span className="ml-2 text-sm text-gray-600">Recuerdame</span>
           </label>
         </div>
 
@@ -87,7 +87,7 @@ export default function Login({ canResetPassword, status }: Props) {
                 href={route('password.request')}
                 className="underline text-sm text-gray-600 hover:text-gray-900"
               >
-                Forgot your password?
+                Olvidaste tu Contraseña?
               </InertiaLink>
             </div>
           )}
@@ -97,14 +97,14 @@ export default function Login({ canResetPassword, status }: Props) {
               href={route('register')}
               className="underline text-sm text-gray-600 hover:text-gray-900"
             >
-              Need an account?
+              Necesitas una Cuenta?
             </InertiaLink>
 
             <JetButton
               className={classNames('ml-4', { 'opacity-25': form.processing })}
               disabled={form.processing}
             >
-              Log in
+              Entrar
             </JetButton>
           </div>
         </div>

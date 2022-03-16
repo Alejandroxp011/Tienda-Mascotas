@@ -8229,7 +8229,7 @@ function Login(_a) {
     className: "mt-4"
   }, react_1["default"].createElement(Label_1["default"], {
     htmlFor: "password"
-  }, "Password"), react_1["default"].createElement(Input_1["default"], {
+  }, "Contrase\xF1a"), react_1["default"].createElement(Input_1["default"], {
     id: "password",
     type: "password",
     className: "mt-1 block w-full",
@@ -8251,22 +8251,22 @@ function Login(_a) {
     }
   }), react_1["default"].createElement("span", {
     className: "ml-2 text-sm text-gray-600"
-  }, "Remember me"))), react_1["default"].createElement("div", {
+  }, "Recuerdame"))), react_1["default"].createElement("div", {
     className: "flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-y-0 mt-4"
   }, canResetPassword && react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('password.request'),
     className: "underline text-sm text-gray-600 hover:text-gray-900"
-  }, "Forgot your password?")), react_1["default"].createElement("div", {
+  }, "Olvidaste tu Contrase\xF1a?")), react_1["default"].createElement("div", {
     className: "flex items-center justify-end"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('register'),
     className: "underline text-sm text-gray-600 hover:text-gray-900"
-  }, "Need an account?"), react_1["default"].createElement(Button_1["default"], {
+  }, "Necesitas una Cuenta?"), react_1["default"].createElement(Button_1["default"], {
     className: (0, classnames_1["default"])('ml-4', {
       'opacity-25': form.processing
     }),
     disabled: form.processing
-  }, "Log in")))));
+  }, "Entrar")))));
 }
 
 exports["default"] = Login;
@@ -8335,14 +8335,14 @@ function Register() {
   }
 
   return react_1["default"].createElement(AuthenticationCard_1["default"], null, react_1["default"].createElement(inertia_react_1.Head, {
-    title: "Register"
+    title: "Registrarse"
   }), react_1["default"].createElement(ValidationErrors_1["default"], {
     className: "mb-4"
   }), react_1["default"].createElement("form", {
     onSubmit: onSubmit
   }, react_1["default"].createElement("div", null, react_1["default"].createElement(Label_1["default"], {
     htmlFor: "name"
-  }, "Name"), react_1["default"].createElement(Input_1["default"], {
+  }, "Nombre"), react_1["default"].createElement(Input_1["default"], {
     id: "name",
     type: "text",
     className: "mt-1 block w-full",
@@ -8370,7 +8370,7 @@ function Register() {
     className: "mt-4"
   }, react_1["default"].createElement(Label_1["default"], {
     htmlFor: "password"
-  }, "Password"), react_1["default"].createElement(Input_1["default"], {
+  }, "Contrase\xF1a"), react_1["default"].createElement(Input_1["default"], {
     id: "password",
     type: "password",
     className: "mt-1 block w-full",
@@ -8384,7 +8384,7 @@ function Register() {
     className: "mt-4"
   }, react_1["default"].createElement(Label_1["default"], {
     htmlFor: "password_confirmation"
-  }, "Confirm Password"), react_1["default"].createElement(Input_1["default"], {
+  }, "Confirmar Contrase\xF1a"), react_1["default"].createElement(Input_1["default"], {
     id: "password_confirmation",
     type: "password",
     className: "mt-1 block w-full",
@@ -8417,17 +8417,17 @@ function Register() {
     target: "_blank",
     href: route('policy.show'),
     className: "underline text-sm text-gray-600 hover:text-gray-900"
-  }, "Privacy Policy"))))), react_1["default"].createElement("div", {
+  }, "Pol\xEDtica de Privacidad"))))), react_1["default"].createElement("div", {
     className: "flex items-center justify-end mt-4"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('login'),
     className: "underline text-sm text-gray-600 hover:text-gray-900"
-  }, "Already registered?"), react_1["default"].createElement(Button_1["default"], {
+  }, "Ya est\xE1s registrado?"), react_1["default"].createElement(Button_1["default"], {
     className: (0, classnames_1["default"])('ml-4', {
       'opacity-25': form.processing
     }),
     disabled: form.processing
-  }, "Register"))));
+  }, "Registrarse"))));
 }
 
 exports["default"] = Register;
@@ -9034,18 +9034,20 @@ function Welcome(_a) {
   return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_2.Head, {
     title: "Bienvenido"
   }), canLogin ? react_1["default"].createElement("nav", {
-    className: "navbar colorPrimary shadow p-3"
+    className: "navbar colorPrimary justify-content-start shadow p-3"
   }, page.props.user ? react_1["default"].createElement("div", {
     className: "container-fluid"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('dashboard'),
-    className: "navbar-brand text-white text-sm"
-  }, "Inicio")) : react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(inertia_react_1.InertiaLink, {
+    className: "btn btn-outline text-white text-sm"
+  }, "Inicio")) : react_1["default"].createElement("div", {
+    className: 'container-fluid justify-content-end'
+  }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('login'),
-    className: "text-sm text-white-700"
+    className: "btn btn-outline-light text-white text-sm me-2"
   }, "Iniciar Sesi\xF3n"), canRegister ? react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('register'),
-    className: "ml-4 text-sm text-white-700"
+    className: "btn btn-outline-light text-white text-sm"
   }, "Registrarse") : null)) : null);
 }
 
@@ -9102,6 +9104,7 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var progress_1 = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
 
+'./';
 var appName = ((_a = window.document.getElementsByTagName('title')[0]) === null || _a === void 0 ? void 0 : _a.innerText) || 'Laravel';
 (0, inertia_react_1.createInertiaApp)({
   title: function title(_title) {

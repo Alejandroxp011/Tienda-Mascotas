@@ -26,21 +26,21 @@ export default function Welcome({
       <Head title="Bienvenido" />
 
       {canLogin ? (
-        <nav className="navbar colorPrimary shadow p-3">
+        <nav className="navbar colorPrimary justify-content-start shadow p-3">
           {page.props.user ? (
             <div className="container-fluid">
             <InertiaLink
               href={route('dashboard')}
-              className="navbar-brand text-white text-sm"
+              className="btn btn-outline text-white text-sm"
             >
               Inicio
             </InertiaLink>
             </div>
           ) : (
-            <>
+            <div className='container-fluid justify-content-end'>
               <InertiaLink
                 href={route('login')}
-                className="text-sm text-white-700"
+                className="btn btn-outline-light text-white text-sm me-2"
               >
                 Iniciar Sesión
               </InertiaLink>
@@ -48,12 +48,12 @@ export default function Welcome({
               {canRegister ? (
                 <InertiaLink
                   href={route('register')}
-                  className="ml-4 text-sm text-white-700"
+                  className="btn btn-outline-light text-white text-sm"
                 >
                  Registrarse
                 </InertiaLink>
               ) : null}
-            </>
+            </div>
           )}
         </nav>
       ) : null}

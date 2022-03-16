@@ -31,13 +31,13 @@ export default function Register() {
 
   return (
     <JetAuthenticationCard>
-      <Head title="Register" />
+      <Head title="Registrarse" />
 
       <JetValidationErrors className="mb-4" />
 
       <form onSubmit={onSubmit}>
         <div>
-          <JetLabel htmlFor="name">Name</JetLabel>
+          <JetLabel htmlFor="name">Nombre</JetLabel>
           <JetInput
             id="name"
             type="text"
@@ -63,7 +63,7 @@ export default function Register() {
         </div>
 
         <div className="mt-4">
-          <JetLabel htmlFor="password">Password</JetLabel>
+          <JetLabel htmlFor="password">Contraseña</JetLabel>
           <JetInput
             id="password"
             type="password"
@@ -76,7 +76,7 @@ export default function Register() {
         </div>
 
         <div className="mt-4">
-          <JetLabel htmlFor="password_confirmation">Confirm Password</JetLabel>
+          <JetLabel htmlFor="password_confirmation">Confirmar Contraseña</JetLabel>
           <JetInput
             id="password_confirmation"
             type="password"
@@ -116,7 +116,7 @@ export default function Register() {
                     href={route('policy.show')}
                     className="underline text-sm text-gray-600 hover:text-gray-900"
                   >
-                    Privacy Policy
+                    Política de Privacidad
                   </a>
                 </div>
               </div>
@@ -129,14 +129,14 @@ export default function Register() {
             href={route('login')}
             className="underline text-sm text-gray-600 hover:text-gray-900"
           >
-            Already registered?
+            Ya estás registrado?
           </InertiaLink>
 
           <JetButton
             className={classNames('ml-4', { 'opacity-25': form.processing })}
             disabled={form.processing}
           >
-            Register
+            Registrarse
           </JetButton>
         </div>
       </form>

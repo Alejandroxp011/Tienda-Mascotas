@@ -4,7 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
-
+'./'
 const appName =
   window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 

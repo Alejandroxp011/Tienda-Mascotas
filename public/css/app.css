@@ -1050,9 +1050,6 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
 .block {
   display: block;
 }
@@ -1226,9 +1223,6 @@ select {
 }
 .flex-wrap {
   flex-wrap: wrap;
-}
-.content-end {
-  align-content: flex-end;
 }
 .items-end {
   align-items: flex-end;
