@@ -29,9 +29,8 @@ export default function ForgotPassword({ status }: Props) {
       <Head title="Forgot Password" />
 
       <div className="mb-4 text-sm text-gray-600">
-        Forgot your password? No problem. Just let us know your email address
-        and we will email you a password reset link that will allow you to
-        choose a new one.
+        Olvidaste tu contraseña?, Tranquilo, Introduce tu Correo Electrónico
+        Y nosotros te mandaremos un correo con los pasos para cambiar tu Contraseña.
       </div>
 
       {status && (

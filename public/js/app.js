@@ -8115,7 +8115,7 @@ function ForgotPassword(_a) {
     title: "Forgot Password"
   }), react_1["default"].createElement("div", {
     className: "mb-4 text-sm text-gray-600"
-  }, "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one."), status && react_1["default"].createElement("div", {
+  }, "Olvidaste tu contrase\xF1a?, Tranquilo, Introduce tu Correo Electr\xF3nico Y nosotros te mandaremos un correo con los pasos para cambiar tu Contrase\xF1a."), status && react_1["default"].createElement("div", {
     className: "mb-4 font-medium text-sm text-green-600"
   }, status), react_1["default"].createElement(ValidationErrors_1["default"], {
     className: "mb-4"
