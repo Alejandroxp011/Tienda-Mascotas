@@ -6,3 +6,10 @@
 .colorPrimary{
   background-color: #1cc623;
 }
+.tituloLogo{
+  font-size: xx-large;
+}
+
+.fondo{
+  background-image: url(../css/images/wallpaper.jpg)
+}

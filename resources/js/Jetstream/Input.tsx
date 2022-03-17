@@ -12,7 +12,7 @@ const JetInput = forwardRef<
     {...props}
     ref={ref}
     className={classNames(
-      'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm',
+      'border-gray-300 border-2 focus:border-green-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm',
       props.className,
     )}
   />

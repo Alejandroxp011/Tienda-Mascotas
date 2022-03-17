@@ -53,16 +53,21 @@ export default function AppLayout({
       <JetBanner />
 
       <div className="min-h-screen bg-gray-100">
-        <nav className="bg-white border-b border-gray-100">
+        <nav className="colorPrimary border-b border-gray-100">
           {/* <!-- Primary Navigation Menu --> */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex">
                 {/* <!-- Logo --> */}
                 <div className="flex-shrink-0 flex items-center">
+                
                   <InertiaLink href={route('dashboard')}>
+                    
                     <JetApplicationMark className="block h-9 w-auto" />
+                    
                   </InertiaLink>
+                  
+                  <p className='me-2 text-white'>Pet Supplies</p>
                 </div>
 
                 {/* <!-- Navigation Links --> */}
@@ -211,11 +216,11 @@ export default function AppLayout({
                   >
                     {/* <!-- Account Management --> */}
                     <div className="block px-4 py-2 text-xs text-gray-400">
-                      Manage Account
+                      Administrar Cuenta
                     </div>
 
                     <JetDropdownLink href={route('profile.show')}>
-                      Profile
+                      Perfil
                     </JetDropdownLink>
 
                     {page.props.jetstream.hasApiFeatures ? (
@@ -228,7 +233,7 @@ export default function AppLayout({
 
                     {/* <!-- Authentication --> */}
                     <form onSubmit={logout}>
-                      <JetDropdownLink as="button">Log Out</JetDropdownLink>
+                      <JetDropdownLink as="button">Cerrar Sesión</JetDropdownLink>
                     </form>
                   </JetDropdown>
                 </div>
@@ -304,21 +309,21 @@ export default function AppLayout({
                 ) : null}
 
                 <div>
-                  <div className="font-medium text-base text-gray-800">
+                  <div className="font-medium text-base text-white">
                     {page.props.user.name}
                   </div>
-                  <div className="font-medium text-sm text-gray-500">
+                  <div className="font-medium text-sm text-white">
                     {page.props.user.email}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-3 space-y-1">
+              <div className="mt-3 space-y-1 ">
                 <JetResponsiveNavLink
                   href={route('profile.show')}
                   active={route().current('profile.show')}
                 >
-                  Profile
+                  Perfil
                 </JetResponsiveNavLink>
 
                 {page.props.jetstream.hasApiFeatures ? (
@@ -333,7 +338,7 @@ export default function AppLayout({
                 {/* <!-- Authentication --> */}
                 <form method="POST" onSubmit={logout}>
                   <JetResponsiveNavLink as="button">
-                    Log Out
+                    Cerrar Sesión
                   </JetResponsiveNavLink>
                 </form>
 

@@ -12,6 +12,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.16.7",
     "@prettier/plugin-php": "^0.18.3",
+    "@svgr/core": "^6.2.1",
     "@svgr/webpack": "^6.2.1",
     "@tailwindcss/forms": "^0.4.1",
     "@tailwindcss/typography": "^0.5.2",

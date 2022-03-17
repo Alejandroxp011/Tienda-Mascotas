@@ -9,13 +9,11 @@ import JetCheckbox from '@/Jetstream/Checkbox';
 import JetInput from '@/Jetstream/Input';
 import JetLabel from '@/Jetstream/Label';
 import JetValidationErrors from '@/Jetstream/ValidationErrors';
-import ReactDOM from 'react-dom';
-
+import Image from '../../../../public/img/wallpaper.jpg';
 interface Props {
   canResetPassword: boolean;
   status: string;
 }
-
 
 export default function Login({ canResetPassword, status }: Props) {
   const route = useRoute();
@@ -35,8 +33,11 @@ export default function Login({ canResetPassword, status }: Props) {
   }
 
   return (
+
+    <div className='fondo'>
     
     <JetAuthenticationCard>
+      
       <Head title="login" />
 
       <JetValidationErrors className="mb-4" />
@@ -104,17 +105,23 @@ export default function Login({ canResetPassword, status }: Props) {
             >
               Necesitas una Cuenta?
             </InertiaLink>
-
+            </div>
+            
+            <div className='flex items-center'>
             <JetButton
-              className={classNames('ml-4', { 'opacity-25': form.processing })}
+              className={classNames('ml-4', { 'opacity-25': form.processing },'colorPrimary')}
               disabled={form.processing}
             >
               Entrar
             </JetButton>
-          </div>
+            </div>
+
+          
         </div>
       </form>
     </JetAuthenticationCard>
+    </div>
+   
   );
   
 }

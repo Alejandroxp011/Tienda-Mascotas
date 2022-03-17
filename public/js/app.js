@@ -4254,6 +4254,26 @@ module.exports = {
 "use strict";
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -4292,16 +4312,6 @@ var __importStar = this && this.__importStar || function (mod) {
   __setModuleDefault(result, mod);
 
   return result;
-};
-
-var __spreadArray = this && this.__spreadArray || function (to, from, pack) {
-  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-    if (ar || !(i in from)) {
-      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-      ar[i] = from[i];
-    }
-  }
-  return to.concat(ar || Array.prototype.slice.call(from));
 };
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -4348,12 +4358,13 @@ var SecondaryButton_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Seco
 
 var SectionBorder_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SectionBorder */ "./resources/js/Jetstream/SectionBorder.tsx"));
 
-function APITokenManager(_a) {
-  var _b, _c, _d;
+function APITokenManager(_ref) {
+  var tokens = _ref.tokens,
+      availablePermissions = _ref.availablePermissions,
+      defaultPermissions = _ref.defaultPermissions;
 
-  var tokens = _a.tokens,
-      availablePermissions = _a.availablePermissions,
-      defaultPermissions = _a.defaultPermissions;
+  var _a, _b, _c;
+
   var route = (0, useRoute_1["default"])();
   var createApiTokenForm = (0, inertia_react_1.useForm)({
     name: '',
@@ -4364,17 +4375,20 @@ function APITokenManager(_a) {
   });
   var deleteApiTokenForm = (0, inertia_react_1.useForm)({});
 
-  var _e = (0, react_1.useState)(false),
-      displayingToken = _e[0],
-      setDisplayingToken = _e[1];
+  var _ref2 = (0, react_1.useState)(false),
+      _ref3 = _slicedToArray(_ref2, 2),
+      displayingToken = _ref3[0],
+      setDisplayingToken = _ref3[1];
 
-  var _f = (0, react_1.useState)(null),
-      managingPermissionsFor = _f[0],
-      setManagingPermissionsFor = _f[1];
+  var _ref4 = (0, react_1.useState)(null),
+      _ref5 = _slicedToArray(_ref4, 2),
+      managingPermissionsFor = _ref5[0],
+      setManagingPermissionsFor = _ref5[1];
 
-  var _g = (0, react_1.useState)(null),
-      apiTokenBeingDeleted = _g[0],
-      setApiTokenBeingDeleted = _g[1];
+  var _ref6 = (0, react_1.useState)(null),
+      _ref7 = _slicedToArray(_ref6, 2),
+      apiTokenBeingDeleted = _ref7[0],
+      setApiTokenBeingDeleted = _ref7[1];
 
   var page = (0, inertia_react_1.usePage)();
 
@@ -4476,7 +4490,7 @@ function APITokenManager(_a) {
             return p !== e.currentTarget.value;
           }));
         } else {
-          createApiTokenForm.setData('permissions', __spreadArray([e.currentTarget.value], createApiTokenForm.data.permissions, true));
+          createApiTokenForm.setData('permissions', [e.currentTarget.value].concat(_toConsumableArray(createApiTokenForm.data.permissions)));
         }
       }
     }), react_1["default"].createElement("span", {
@@ -4517,7 +4531,7 @@ function APITokenManager(_a) {
     title: 'API Token'
   }, react_1["default"].createElement("div", null, "Please copy your new API token. For your security, it won't be shown again."), react_1["default"].createElement("div", {
     className: "mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500"
-  }, (_d = (_c = (_b = page.props) === null || _b === void 0 ? void 0 : _b.jetstream) === null || _c === void 0 ? void 0 : _c.flash) === null || _d === void 0 ? void 0 : _d.token)), react_1["default"].createElement(DialogModal_1["default"].Footer, null, react_1["default"].createElement(SecondaryButton_1["default"], {
+  }, (_c = (_b = (_a = page.props) === null || _a === void 0 ? void 0 : _a.jetstream) === null || _b === void 0 ? void 0 : _b.flash) === null || _c === void 0 ? void 0 : _c.token)), react_1["default"].createElement(DialogModal_1["default"].Footer, null, react_1["default"].createElement(SecondaryButton_1["default"], {
     onClick: function onClick() {
       return setDisplayingToken(false);
     }
@@ -4544,7 +4558,7 @@ function APITokenManager(_a) {
             return p !== e.currentTarget.value;
           }));
         } else {
-          updateApiTokenForm.setData('permissions', __spreadArray([e.currentTarget.value], updateApiTokenForm.data.permissions, true));
+          updateApiTokenForm.setData('permissions', [e.currentTarget.value].concat(_toConsumableArray(updateApiTokenForm.data.permissions)));
         }
       }
     }), react_1["default"].createElement("span", {
@@ -4592,6 +4606,18 @@ exports["default"] = APITokenManager;
 
 "use strict";
 
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -4666,9 +4692,10 @@ var SecondaryButton_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Seco
 function DeleteUserForm() {
   var route = (0, useRoute_1["default"])();
 
-  var _a = (0, react_1.useState)(false),
-      confirmingUserDeletion = _a[0],
-      setConfirmingUserDeletion = _a[1];
+  var _ref = (0, react_1.useState)(false),
+      _ref2 = _slicedToArray(_ref, 2),
+      confirmingUserDeletion = _ref2[0],
+      setConfirmingUserDeletion = _ref2[1];
 
   var form = (0, inertia_react_1.useForm)({
     password: ''
@@ -4757,6 +4784,18 @@ exports["default"] = DeleteUserForm;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -4829,12 +4868,13 @@ var InputError_1 = __importDefault(__webpack_require__(/*! @/Jetstream/InputErro
 
 var SecondaryButton_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.tsx"));
 
-function LogoutOtherBrowserSessions(_a) {
-  var sessions = _a.sessions;
+function LogoutOtherBrowserSessions(_ref) {
+  var sessions = _ref.sessions;
 
-  var _b = (0, react_1.useState)(false),
-      confirmingLogout = _b[0],
-      setConfirmingLogout = _b[1];
+  var _ref2 = (0, react_1.useState)(false),
+      _ref3 = _slicedToArray(_ref2, 2),
+      confirmingLogout = _ref3[0],
+      setConfirmingLogout = _ref3[1];
 
   var route = (0, useRoute_1["default"])();
   var passwordRef = (0, react_1.useRef)(null);
@@ -4973,6 +5013,18 @@ exports["default"] = LogoutOtherBrowserSessions;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -5048,21 +5100,25 @@ function TwoFactorAuthenticationForm() {
 
   var page = (0, inertia_react_1.usePage)();
 
-  var _c = (0, react_1.useState)(false),
-      enabling = _c[0],
-      setEnabling = _c[1];
+  var _ref = (0, react_1.useState)(false),
+      _ref2 = _slicedToArray(_ref, 2),
+      enabling = _ref2[0],
+      setEnabling = _ref2[1];
 
-  var _d = (0, react_1.useState)(false),
-      disabling = _d[0],
-      setDisabling = _d[1];
+  var _ref3 = (0, react_1.useState)(false),
+      _ref4 = _slicedToArray(_ref3, 2),
+      disabling = _ref4[0],
+      setDisabling = _ref4[1];
 
-  var _e = (0, react_1.useState)(null),
-      qrCode = _e[0],
-      setQrCode = _e[1];
+  var _ref5 = (0, react_1.useState)(null),
+      _ref6 = _slicedToArray(_ref5, 2),
+      qrCode = _ref6[0],
+      setQrCode = _ref6[1];
 
-  var _f = (0, react_1.useState)([]),
-      recoveryCodes = _f[0],
-      setRecoveryCodes = _f[1];
+  var _ref7 = (0, react_1.useState)([]),
+      _ref8 = _slicedToArray(_ref7, 2),
+      recoveryCodes = _ref8[0],
+      setRecoveryCodes = _ref8[1];
 
   var twoFactorEnabled = (_b = (_a = page.props) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.two_factor_enabled;
 
@@ -5355,6 +5411,18 @@ exports["default"] = UpdatePasswordForm;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -5429,8 +5497,8 @@ var Label_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Label */ "./re
 
 var SecondaryButton_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.tsx"));
 
-function UpdateProfileInformationForm(_a) {
-  var user = _a.user;
+function UpdateProfileInformationForm(_ref) {
+  var user = _ref.user;
   var form = (0, inertia_react_1.useForm)({
     _method: 'PUT',
     name: user.name,
@@ -5439,9 +5507,10 @@ function UpdateProfileInformationForm(_a) {
   });
   var route = (0, useRoute_1["default"])();
 
-  var _b = (0, react_1.useState)(null),
-      photoPreview = _b[0],
-      setPhotoPreview = _b[1];
+  var _ref2 = (0, react_1.useState)(null),
+      _ref3 = _slicedToArray(_ref2, 2),
+      photoPreview = _ref3[0],
+      setPhotoPreview = _ref3[1];
 
   var photoRef = (0, react_1.useRef)(null);
   var page = (0, inertia_react_1.usePage)();
@@ -5667,10 +5736,10 @@ var react_1 = __webpack_require__(/*! @headlessui/react */ "./node_modules/@head
 
 var react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetActionMessage(_a) {
-  var on = _a.on,
-      className = _a.className,
-      children = _a.children;
+function JetActionMessage(_ref) {
+  var on = _ref.on,
+      className = _ref.className,
+      children = _ref.children;
   return react_2["default"].createElement("div", {
     className: className
   }, react_2["default"].createElement(react_1.Transition, {
@@ -5710,10 +5779,10 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var SectionTitle_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SectionTitle */ "./resources/js/Jetstream/SectionTitle.tsx"));
 
-function JetActionSection(_a) {
-  var title = _a.title,
-      description = _a.description,
-      children = _a.children;
+function JetActionSection(_ref) {
+  var title = _ref.title,
+      description = _ref.description,
+      children = _ref.children;
   return react_1["default"].createElement("div", {
     className: "md:grid md:grid-cols-3 md:gap-6"
   }, react_1["default"].createElement(SectionTitle_1["default"], {
@@ -5730,50 +5799,6 @@ exports["default"] = JetActionSection;
 
 /***/ }),
 
-/***/ "./resources/js/Jetstream/ApplicationLogo.tsx":
-/*!****************************************************!*\
-  !*** ./resources/js/Jetstream/ApplicationLogo.tsx ***!
-  \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-function JetApplicationLogo(_a) {
-  var className = _a.className;
-  return react_1["default"].createElement("svg", {
-    viewBox: "0 0 317 48",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg",
-    className: className
-  }, react_1["default"].createElement("path", {
-    d: "M74.09 30.04V13h-4.14v21H82.1v-3.96h-8.01zM95.379 19v1.77c-1.08-1.35-2.7-2.19-4.89-2.19-3.99 0-7.29 3.45-7.29 7.92s3.3 7.92 7.29 7.92c2.19 0 3.81-.84 4.89-2.19V34h3.87V19h-3.87zm-4.17 11.73c-2.37 0-4.14-1.71-4.14-4.23 0-2.52 1.77-4.23 4.14-4.23 2.4 0 4.17 1.71 4.17 4.23 0 2.52-1.77 4.23-4.17 4.23zM106.628 21.58V19h-3.87v15h3.87v-7.17c0-3.15 2.55-4.05 4.56-3.81V18.7c-1.89 0-3.78.84-4.56 2.88zM124.295 19v1.77c-1.08-1.35-2.7-2.19-4.89-2.19-3.99 0-7.29 3.45-7.29 7.92s3.3 7.92 7.29 7.92c2.19 0 3.81-.84 4.89-2.19V34h3.87V19h-3.87zm-4.17 11.73c-2.37 0-4.14-1.71-4.14-4.23 0-2.52 1.77-4.23 4.14-4.23 2.4 0 4.17 1.71 4.17 4.23 0 2.52-1.77 4.23-4.17 4.23zM141.544 19l-3.66 10.5-3.63-10.5h-4.26l5.7 15h4.41l5.7-15h-4.26zM150.354 28.09h11.31c.09-.51.15-1.02.15-1.59 0-4.41-3.15-7.92-7.59-7.92-4.71 0-7.92 3.45-7.92 7.92s3.18 7.92 8.22 7.92c2.88 0 5.13-1.17 6.54-3.21l-3.12-1.8c-.66.87-1.86 1.5-3.36 1.5-2.04 0-3.69-.84-4.23-2.82zm-.06-3c.45-1.92 1.86-3.03 3.93-3.03 1.62 0 3.24.87 3.72 3.03h-7.65zM164.516 34h3.87V12.1h-3.87V34zM185.248 34.36c3.69 0 6.9-2.01 6.9-6.3V13h-2.1v15.06c0 3.03-2.07 4.26-4.8 4.26-2.19 0-3.93-.78-4.62-2.61l-1.77 1.05c1.05 2.43 3.57 3.6 6.39 3.6zM203.124 18.64c-4.65 0-7.83 3.45-7.83 7.86 0 4.53 3.24 7.86 7.98 7.86 3.03 0 5.34-1.41 6.6-3.45l-1.74-1.02c-.81 1.44-2.46 2.55-4.83 2.55-3.18 0-5.55-1.89-5.97-4.95h13.17c.03-.3.06-.63.06-.93 0-4.11-2.85-7.92-7.44-7.92zm0 1.92c2.58 0 4.98 1.71 5.4 5.01h-11.19c.39-2.94 2.64-5.01 5.79-5.01zM221.224 20.92V19h-4.32v-4.2l-1.98.6V19h-3.15v1.92h3.15v9.09c0 3.6 2.25 4.59 6.3 3.99v-1.74c-2.91.12-4.32.33-4.32-2.25v-9.09h4.32zM225.176 22.93c0-1.62 1.59-2.37 3.15-2.37 1.44 0 2.97.57 3.6 2.1l1.65-.96c-.87-1.86-2.79-3.06-5.25-3.06-3 0-5.13 1.89-5.13 4.29 0 5.52 8.76 3.39 8.76 7.11 0 1.77-1.68 2.4-3.45 2.4-2.01 0-3.57-.99-4.11-2.52l-1.68.99c.75 1.92 2.79 3.45 5.79 3.45 3.21 0 5.43-1.77 5.43-4.32 0-5.52-8.76-3.39-8.76-7.11zM244.603 20.92V19h-4.32v-4.2l-1.98.6V19h-3.15v1.92h3.15v9.09c0 3.6 2.25 4.59 6.3 3.99v-1.74c-2.91.12-4.32.33-4.32-2.25v-9.09h4.32zM249.883 21.49V19h-1.98v15h1.98v-8.34c0-3.72 2.34-4.98 4.74-4.98v-1.92c-1.92 0-3.69.63-4.74 2.73zM263.358 18.64c-4.65 0-7.83 3.45-7.83 7.86 0 4.53 3.24 7.86 7.98 7.86 3.03 0 5.34-1.41 6.6-3.45l-1.74-1.02c-.81 1.44-2.46 2.55-4.83 2.55-3.18 0-5.55-1.89-5.97-4.95h13.17c.03-.3.06-.63.06-.93 0-4.11-2.85-7.92-7.44-7.92zm0 1.92c2.58 0 4.98 1.71 5.4 5.01h-11.19c.39-2.94 2.64-5.01 5.79-5.01zM286.848 19v2.94c-1.26-2.01-3.39-3.3-6.06-3.3-4.23 0-7.74 3.42-7.74 7.86s3.51 7.86 7.74 7.86c2.67 0 4.8-1.29 6.06-3.3V34h1.98V19h-1.98zm-5.91 13.44c-3.33 0-5.91-2.61-5.91-5.94 0-3.33 2.58-5.94 5.91-5.94s5.91 2.61 5.91 5.94c0 3.33-2.58 5.94-5.91 5.94zM309.01 18.64c-1.92 0-3.75.87-4.86 2.73-.84-1.74-2.46-2.73-4.56-2.73-1.8 0-3.42.72-4.59 2.55V19h-1.98v15H295v-8.31c0-3.72 2.16-5.13 4.32-5.13 2.13 0 3.51 1.41 3.51 4.08V34h1.98v-8.31c0-3.72 1.86-5.13 4.17-5.13 2.13 0 3.66 1.41 3.66 4.08V34h1.98v-9.36c0-3.75-2.31-6-5.61-6z",
-    fill: "#000"
-  }), react_1["default"].createElement("path", {
-    d: "M11.395 44.428C4.557 40.198 0 32.632 0 24 0 10.745 10.745 0 24 0a23.891 23.891 0 0113.997 4.502c-.2 17.907-11.097 33.245-26.602 39.926z",
-    fill: "#6875F5"
-  }), react_1["default"].createElement("path", {
-    d: "M14.134 45.885A23.914 23.914 0 0024 48c13.255 0 24-10.745 24-24 0-3.516-.756-6.856-2.115-9.866-4.659 15.143-16.608 27.092-31.75 31.751z",
-    fill: "#6875F5"
-  }));
-}
-
-exports["default"] = JetApplicationLogo;
-
-/***/ }),
-
 /***/ "./resources/js/Jetstream/ApplicationMark.tsx":
 /*!****************************************************!*\
   !*** ./resources/js/Jetstream/ApplicationMark.tsx ***!
@@ -5783,22 +5808,6 @@ exports["default"] = JetApplicationLogo;
 "use strict";
 
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -5811,18 +5820,10 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var LogoDash_1 = __importDefault(__webpack_require__(/*! ./LogoDash */ "./resources/js/Jetstream/LogoDash.tsx"));
+
 function JetApplicationMark(props) {
-  return react_1["default"].createElement("svg", __assign({
-    viewBox: "0 0 48 48",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, props), react_1["default"].createElement("path", {
-    d: "M11.395 44.428C4.557 40.198 0 32.632 0 24 0 10.745 10.745 0 24 0a23.891 23.891 0 0113.997 4.502c-.2 17.907-11.097 33.245-26.602 39.926z",
-    fill: "#6875F5"
-  }), react_1["default"].createElement("path", {
-    d: "M14.134 45.885A23.914 23.914 0 0024 48c13.255 0 24-10.745 24-24 0-3.516-.756-6.856-2.115-9.866-4.659 15.143-16.608 27.092-31.75 31.751z",
-    fill: "#6875F5"
-  }));
+  return react_1["default"].createElement(LogoDash_1["default"], null);
 }
 
 exports["default"] = JetApplicationMark;
@@ -5852,11 +5853,15 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var AuthenticationCardLogo_1 = __importDefault(__webpack_require__(/*! @/Jetstream/AuthenticationCardLogo */ "./resources/js/Jetstream/AuthenticationCardLogo.tsx"));
 
-function JetAuthenticationCard(_a) {
-  var children = _a.children;
+function JetAuthenticationCard(_ref) {
+  var children = _ref.children;
   return react_1["default"].createElement("div", {
     className: "min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100"
-  }, react_1["default"].createElement("div", null, react_1["default"].createElement(AuthenticationCardLogo_1["default"], null)), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("div", {
+    className: 'text-center'
+  }, react_1["default"].createElement(AuthenticationCardLogo_1["default"], null), react_1["default"].createElement("p", {
+    className: 'tituloLogo '
+  }, "Pet Supplies")), react_1["default"].createElement("div", {
     className: "w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
   }, children));
 }
@@ -5888,21 +5893,12 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var Logo_1 = __importDefault(__webpack_require__(/*! ./Logo */ "./resources/js/Jetstream/Logo.tsx"));
+
 function JetAuthenticationCardLogo() {
   return react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: "/"
-  }, react_1["default"].createElement("svg", {
-    className: "w-16 h-16",
-    viewBox: "0 0 48 48",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, react_1["default"].createElement("path", {
-    d: "M11.395 44.428C4.557 40.198 0 32.632 0 24 0 10.745 10.745 0 24 0a23.891 23.891 0 0113.997 4.502c-.2 17.907-11.097 33.245-26.602 39.926z",
-    fill: "#6875F5"
-  }), react_1["default"].createElement("path", {
-    d: "M14.134 45.885A23.914 23.914 0 0024 48c13.255 0 24-10.745 24-24 0-3.516-.756-6.856-2.115-9.866-4.659 15.143-16.608 27.092-31.75 31.751z",
-    fill: "#6875F5"
-  })));
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement(Logo_1["default"], null)));
 }
 
 exports["default"] = JetAuthenticationCardLogo;
@@ -5917,6 +5913,18 @@ exports["default"] = JetAuthenticationCardLogo;
 
 "use strict";
 
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -5977,11 +5985,14 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 function JetBanner() {
   var _a, _b;
 
-  var _c = (0, react_1.useState)(true),
-      show = _c[0],
-      setShow = _c[1];
+  var _ref = (0, react_1.useState)(true),
+      _ref2 = _slicedToArray(_ref, 2),
+      show = _ref2[0],
+      setShow = _ref2[1];
 
-  var props = (0, inertia_react_1.usePage)().props;
+  var _ref3 = (0, inertia_react_1.usePage)(),
+      props = _ref3.props;
+
   var style = ((_a = props.jetstream.flash) === null || _a === void 0 ? void 0 : _a.bannerStyle) || 'success';
   var message = ((_b = props.jetstream.flash) === null || _b === void 0 ? void 0 : _b.banner) || '';
   return react_1["default"].createElement("div", null, show && message ? react_1["default"].createElement("div", {
@@ -6052,12 +6063,12 @@ function JetBanner() {
     className: "h-5 w-5 text-white",
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
-    viewBox: "0 0 24 24",
+    viewBox: "0 0 233 24",
     stroke: "currentColor"
   }, react_1["default"].createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    strokeWidth: "2",
+    strokeWidth: "8",
     d: "M6 18L18 6M6 6l12 12"
   }))))))) : null);
 }
@@ -6074,22 +6085,6 @@ exports["default"] = JetBanner;
 
 "use strict";
 
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 
 var __rest = this && this.__rest || function (s, e) {
   var t = {};
@@ -6122,7 +6117,7 @@ function JetButton(_a) {
   var children = _a.children,
       props = __rest(_a, ["children"]);
 
-  return react_1["default"].createElement("button", __assign({}, props, {
+  return react_1["default"].createElement("button", Object.assign({}, props, {
     className: (0, classnames_1["default"])('inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition', props.className)
   }), children);
 }
@@ -6140,22 +6135,6 @@ exports["default"] = JetButton;
 "use strict";
 
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -6171,7 +6150,7 @@ var classnames_1 = __importDefault(__webpack_require__(/*! classnames */ "./node
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 function JetCheckbox(props) {
-  return react_1["default"].createElement("input", __assign({
+  return react_1["default"].createElement("input", Object.assign({
     type: "checkbox"
   }, props, {
     className: (0, classnames_1["default"])('rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50', props.className)
@@ -6190,22 +6169,6 @@ exports["default"] = JetCheckbox;
 
 "use strict";
 
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 
 var __rest = this && this.__rest || function (s, e) {
   var t = {};
@@ -6234,9 +6197,9 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var Modal_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Modal */ "./resources/js/Jetstream/Modal.tsx"));
 
-JetConfirmationModal.Content = function JetConfirmationModalContent(_a) {
-  var title = _a.title,
-      children = _a.children;
+JetConfirmationModal.Content = function JetConfirmationModalContent(_ref) {
+  var title = _ref.title,
+      children = _ref.children;
   return react_1["default"].createElement("div", {
     className: "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
   }, react_1["default"].createElement("div", {
@@ -6262,8 +6225,8 @@ JetConfirmationModal.Content = function JetConfirmationModalContent(_a) {
   }, children))));
 };
 
-JetConfirmationModal.Footer = function JetConfirmationModalFooter(_a) {
-  var children = _a.children;
+JetConfirmationModal.Footer = function JetConfirmationModalFooter(_ref2) {
+  var children = _ref2.children;
   return react_1["default"].createElement("div", {
     className: "px-6 py-4 bg-gray-100 text-right"
   }, children);
@@ -6273,7 +6236,7 @@ function JetConfirmationModal(_a) {
   var children = _a.children,
       props = __rest(_a, ["children"]);
 
-  return react_1["default"].createElement(Modal_1["default"], __assign({}, props), children);
+  return react_1["default"].createElement(Modal_1["default"], Object.assign({}, props), children);
 }
 
 exports["default"] = JetConfirmationModal;
@@ -6289,21 +6252,17 @@ exports["default"] = JetConfirmationModal;
 "use strict";
 
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-    return t;
-  };
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-  return __assign.apply(this, arguments);
-};
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -6373,28 +6332,30 @@ var InputError_1 = __importDefault(__webpack_require__(/*! @/Jetstream/InputErro
 
 var SecondaryButton_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.tsx"));
 
-function JetConfirmsPassword(_a) {
-  var _b = _a.title,
-      title = _b === void 0 ? 'Confirm Password' : _b,
-      _c = _a.content,
-      content = _c === void 0 ? 'For your security, please confirm your password to continue.' : _c,
-      _d = _a.button,
-      button = _d === void 0 ? 'Confirm' : _d,
-      onConfirm = _a.onConfirm,
-      children = _a.children;
+function JetConfirmsPassword(_ref) {
+  var _ref$title = _ref.title,
+      title = _ref$title === void 0 ? 'Confirm Password' : _ref$title,
+      _ref$content = _ref.content,
+      content = _ref$content === void 0 ? 'For your security, please confirm your password to continue.' : _ref$content,
+      _ref$button = _ref.button,
+      button = _ref$button === void 0 ? 'Confirm' : _ref$button,
+      onConfirm = _ref.onConfirm,
+      children = _ref.children;
   var route = (0, useRoute_1["default"])();
 
-  var _e = (0, react_1.useState)(false),
-      confirmingPassword = _e[0],
-      setConfirmingPassword = _e[1];
+  var _ref2 = (0, react_1.useState)(false),
+      _ref3 = _slicedToArray(_ref2, 2),
+      confirmingPassword = _ref3[0],
+      setConfirmingPassword = _ref3[1];
 
-  var _f = (0, react_1.useState)({
+  var _ref4 = (0, react_1.useState)({
     password: '',
     error: '',
     processing: false
   }),
-      form = _f[0],
-      setForm = _f[1];
+      _ref5 = _slicedToArray(_ref4, 2),
+      form = _ref5[0],
+      setForm = _ref5[1];
 
   var passwordRef = (0, react_1.useRef)(null);
 
@@ -6414,7 +6375,7 @@ function JetConfirmsPassword(_a) {
   }
 
   function confirmPassword() {
-    setForm(__assign(__assign({}, form), {
+    setForm(Object.assign(Object.assign({}, form), {
       processing: true
     }));
     axios_1["default"].post(route('password.confirm'), {
@@ -6427,7 +6388,7 @@ function JetConfirmsPassword(_a) {
     })["catch"](function (error) {
       var _a;
 
-      setForm(__assign(__assign({}, form), {
+      setForm(Object.assign(Object.assign({}, form), {
         processing: false,
         error: error.response.data.errors.password[0]
       }));
@@ -6459,7 +6420,7 @@ function JetConfirmsPassword(_a) {
     placeholder: "Password",
     value: form.password,
     onChange: function onChange(e) {
-      return setForm(__assign(__assign({}, form), {
+      return setForm(Object.assign(Object.assign({}, form), {
         password: e.currentTarget.value
       }));
     }
@@ -6489,22 +6450,6 @@ exports["default"] = JetConfirmsPassword;
 
 "use strict";
 
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 
 var __rest = this && this.__rest || function (s, e) {
   var t = {};
@@ -6537,7 +6482,7 @@ function JetDangerButton(_a) {
   var children = _a.children,
       props = __rest(_a, ["children"]);
 
-  return react_1["default"].createElement("button", __assign({}, props, {
+  return react_1["default"].createElement("button", Object.assign({}, props, {
     className: (0, classnames_1["default"])('inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition', props.className)
   }), children);
 }
@@ -6554,22 +6499,6 @@ exports["default"] = JetDangerButton;
 
 "use strict";
 
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 
 var __rest = this && this.__rest || function (s, e) {
   var t = {};
@@ -6598,9 +6527,9 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var Modal_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Modal */ "./resources/js/Jetstream/Modal.tsx"));
 
-JetDialogModal.Content = function JetDialogModalContent(_a) {
-  var title = _a.title,
-      children = _a.children;
+JetDialogModal.Content = function JetDialogModalContent(_ref) {
+  var title = _ref.title,
+      children = _ref.children;
   return react_1["default"].createElement("div", {
     className: "px-6 py-4"
   }, react_1["default"].createElement("div", {
@@ -6610,8 +6539,8 @@ JetDialogModal.Content = function JetDialogModalContent(_a) {
   }, children));
 };
 
-JetDialogModal.Footer = function JetDialogModalFooter(_a) {
-  var children = _a.children;
+JetDialogModal.Footer = function JetDialogModalFooter(_ref2) {
+  var children = _ref2.children;
   return react_1["default"].createElement("div", {
     className: "px-6 py-4 bg-gray-100 text-right"
   }, children);
@@ -6621,7 +6550,7 @@ function JetDialogModal(_a) {
   var children = _a.children,
       modalProps = __rest(_a, ["children"]);
 
-  return react_1["default"].createElement(Modal_1["default"], __assign({}, modalProps), children);
+  return react_1["default"].createElement(Modal_1["default"], Object.assign({}, modalProps), children);
 }
 
 exports["default"] = JetDialogModal;
@@ -6636,6 +6565,18 @@ exports["default"] = JetDialogModal;
 
 "use strict";
 
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -6693,19 +6634,20 @@ var classnames_1 = __importDefault(__webpack_require__(/*! classnames */ "./node
 
 var react_2 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetDropdown(_a) {
-  var _b = _a.align,
-      align = _b === void 0 ? 'right' : _b,
-      _c = _a.width,
-      width = _c === void 0 ? '48' : _c,
-      _d = _a.contentClasses,
-      contentClasses = _d === void 0 ? 'py-1 bg-white' : _d,
-      renderTrigger = _a.renderTrigger,
-      children = _a.children;
+function JetDropdown(_ref) {
+  var _ref$align = _ref.align,
+      align = _ref$align === void 0 ? 'right' : _ref$align,
+      _ref$width = _ref.width,
+      width = _ref$width === void 0 ? '48' : _ref$width,
+      _ref$contentClasses = _ref.contentClasses,
+      contentClasses = _ref$contentClasses === void 0 ? 'py-1 bg-white' : _ref$contentClasses,
+      renderTrigger = _ref.renderTrigger,
+      children = _ref.children;
 
-  var _e = (0, react_2.useState)(false),
-      open = _e[0],
-      setOpen = _e[1];
+  var _ref2 = (0, react_2.useState)(false),
+      _ref3 = _slicedToArray(_ref2, 2),
+      open = _ref3[0],
+      setOpen = _ref3[1];
 
   var widthClass = {
     '48': 'w-48'
@@ -6780,10 +6722,10 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetDropdownLink(_a) {
-  var as = _a.as,
-      href = _a.href,
-      children = _a.children;
+function JetDropdownLink(_ref) {
+  var as = _ref.as,
+      href = _ref.href,
+      children = _ref.children;
   return react_1["default"].createElement("div", null, function () {
     switch (as) {
       case 'button':
@@ -6836,12 +6778,12 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var SectionTitle_1 = __importDefault(__webpack_require__(/*! @/Jetstream/SectionTitle */ "./resources/js/Jetstream/SectionTitle.tsx"));
 
-function JetFormSection(_a) {
-  var _onSubmit = _a.onSubmit,
-      renderActions = _a.renderActions,
-      title = _a.title,
-      description = _a.description,
-      children = _a.children;
+function JetFormSection(_ref) {
+  var _onSubmit = _ref.onSubmit,
+      renderActions = _ref.renderActions,
+      title = _ref.title,
+      description = _ref.description,
+      children = _ref.children;
   var hasActions = !!renderActions;
   return react_1["default"].createElement("div", {
     className: "md:grid md:grid-cols-3 md:gap-6"
@@ -6877,22 +6819,6 @@ exports["default"] = JetFormSection;
 
 "use strict";
 
-
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -6949,9 +6875,9 @@ var classnames_1 = __importDefault(__webpack_require__(/*! classnames */ "./node
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var JetInput = (0, react_1.forwardRef)(function (props, ref) {
-  return react_1["default"].createElement("input", __assign({}, props, {
+  return react_1["default"].createElement("input", Object.assign({}, props, {
     ref: ref,
-    className: (0, classnames_1["default"])('border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm', props.className)
+    className: (0, classnames_1["default"])('border-gray-300 border-2 focus:border-green-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm', props.className)
   }));
 });
 exports["default"] = JetInput;
@@ -6979,10 +6905,10 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetInputError(_a) {
-  var message = _a.message,
-      className = _a.className,
-      children = _a.children;
+function JetInputError(_ref) {
+  var message = _ref.message,
+      className = _ref.className,
+      children = _ref.children;
 
   if (!message && !children) {
     return null;
@@ -7020,17 +6946,187 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetLabel(_a) {
-  var value = _a.value,
-      htmlFor = _a.htmlFor,
-      children = _a.children;
+function JetLabel(_ref) {
+  var value = _ref.value,
+      htmlFor = _ref.htmlFor,
+      children = _ref.children;
   return react_1["default"].createElement("label", {
-    className: "block font-medium text-sm text-gray-700",
+    className: "block font-medium text-sm text-gray-700 ",
     htmlFor: htmlFor
   }, value || children);
 }
 
 exports["default"] = JetLabel;
+
+/***/ }),
+
+/***/ "./resources/js/Jetstream/Logo.tsx":
+/*!*****************************************!*\
+  !*** ./resources/js/Jetstream/Logo.tsx ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var SvgComponent = function SvgComponent(props) {
+  return React.createElement("svg", Object.assign({
+    width: 134,
+    height: 134,
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    xmlnsXlink: "http://www.w3.org/1999/xlink"
+  }, props), React.createElement("path", {
+    fill: "url(#a)",
+    d: "M0 0h134v134H0z"
+  }), React.createElement("defs", null, React.createElement("pattern", {
+    id: "a",
+    patternContentUnits: "objectBoundingBox",
+    width: 1,
+    height: 1
+  }, React.createElement("use", {
+    xlinkHref: "#b",
+    transform: "scale(.00195)"
+  })), React.createElement("image", {
+    id: "b",
+    width: 512,
+    height: 512,
+    xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACAASURBVHic7N13fFX1/T/w1x25N7k3N3snZBBWCGEKCoogDkClbq1Wba3Wvero17qqra119adVHHVRtA4cFVHciykgmwwSQghkk71ukrt+f0QsQub9fM49997zej4ePPqo5nzuW27uOa/7mTqQ1uQBuArAyQAyAVhVrYaI1NQBYB+ALwG8BGCXqtWQT+nULoB8xgzg/wG4BoBe5VqIyP+4ADwP4DYAPSrXQj7AAKANZgCfADhJ7UKIyO99DWAhGAKCnkHtAsgnngFwgdpFEFFAyAIQjd4vDRTE2AMQ/PIAbAO7/Ylo6FwAJgHIV7sQUg4fCsHvKvB9JqLhMQC4Uu0iSFl8MAS/U9QugIgC0qlqF0DK4hBA8GsDEK52EUQUcNoARKhdBCmHASD4edQugIgCFp8RQYxDAERERBrEAEBERKRBDABEREQaxABARESkQQwAREREGsQAQEREpEEMAERERBpkVLsA8m8vXXu62iUQkZeuen6l2iWQH2MPABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBunULoAU51G7ACIKWHxGBDH2ABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxAAS3dLULIKKAxntIEGMACG4nqV0AEQW0uWoXQMphAAhuDABEJIL3kCDGXZ6C2z4AGWoXQUQBaz94Dwla7AEIXiPBDy4RiUkHkKV2EaQMBoDgxa47IpKB95IgxQAQvPihJSIZeC8JUpwDELwqAKSqXQQRBbwq8F4SlNgDEJzGgB9YIpIjBcBotYsg+YxqF0CKEO6ye+Dc4xBtNcuohYhU1NzZjT+9971oMycBKJFQDvkR9gAEJ6EAEGcL48OfKEhEWcyIs4WJNsN5AEGIASD4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"
+  })));
+};
+
+exports["default"] = SvgComponent;
+
+/***/ }),
+
+/***/ "./resources/js/Jetstream/LogoDash.tsx":
+/*!*********************************************!*\
+  !*** ./resources/js/Jetstream/LogoDash.tsx ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var SvgComponent = function SvgComponent(props) {
+  return React.createElement("svg", Object.assign({
+    width: 62,
+    height: 62,
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    xmlnsXlink: "http://www.w3.org/1999/xlink"
+  }, props), React.createElement("path", {
+    fill: "url(#a)",
+    d: "M0 0h62v62H0z"
+  }), React.createElement("defs", null, React.createElement("pattern", {
+    id: "a",
+    patternContentUnits: "objectBoundingBox",
+    width: 1,
+    height: 1
+  }, React.createElement("use", {
+    xlinkHref: "#b",
+    transform: "scale(.00195)"
+  })), React.createElement("image", {
+    id: "b",
+    width: 512,
+    height: 512,
+    xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACAASURBVHic7N13fFX1/T/w1x25N7k3N3snZBBWCGEKCoogDkClbq1Wba3Wvero17qqra119adVHHVRtA4cFVHciykgmwwSQghkk71ukrt+f0QsQub9fM49997zej4ePPqo5nzuW27uOa/7mTqQ1uQBuArAyQAyAVhVrYaI1NQBYB+ALwG8BGCXqtWQT+nULoB8xgzg/wG4BoBe5VqIyP+4ADwP4DYAPSrXQj7AAKANZgCfADhJ7UKIyO99DWAhGAKCnkHtAsgnngFwgdpFEFFAyAIQjd4vDRTE2AMQ/PIAbAO7/Ylo6FwAJgHIV7sQUg4fCsHvKvB9JqLhMQC4Uu0iSFl8MAS/U9QugIgC0qlqF0DK4hBA8GsDEK52EUQUcNoARKhdBCmHASD4edQugIgCFp8RQYxDAERERBrEAEBERKRBDABEREQaxABARESkQQwAREREGsQAQEREpEEMAERERBpkVLsA8m8vXXu62iUQkZeuen6l2iWQH2MPABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxABAREWkQAwAREZEGMQAQERFpEAMAERGRBunULoAU51G7ACIKWHxGBDH2ABAREWkQAwAREZEGMQAQERFpEAMAERGRBjEAEBERaRADABERkQYxAAS3dLULIKKAxntIEGMACG4nqV0AEQW0uWoXQMphAAhuDABEJIL3kCDGXZ6C2z4AGWoXQUQBaz94Dwla7AEIXiPBDy4RiUkHkKV2EaQMBoDgxa47IpKB95IgxQAQvPihJSIZeC8JUpwDELwqAKSqXQQRBbwq8F4SlNgDEJzGgB9YIpIjBcBotYsg+YxqF0CKEO6ye+Dc4xBtNcuohYhU1NzZjT+9971oMycBKJFQDvkR9gAEJ6EAEGcL48OfKEhEWcyIs4WJNsN5AEGIASD4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"
+  })));
+};
+
+exports["default"] = SvgComponent;
 
 /***/ }),
 
@@ -7061,12 +7157,12 @@ var react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
 
-function JetModal(_a) {
-  var isOpen = _a.isOpen,
-      onClose = _a.onClose,
-      _b = _a.maxWidth,
-      maxWidth = _b === void 0 ? '2xl' : _b,
-      children = _a.children;
+function JetModal(_ref) {
+  var isOpen = _ref.isOpen,
+      onClose = _ref.onClose,
+      _ref$maxWidth = _ref.maxWidth,
+      maxWidth = _ref$maxWidth === void 0 ? '2xl' : _ref$maxWidth,
+      children = _ref.children;
   var maxWidthClass = {
     sm: 'sm:max-w-sm',
     md: 'sm:max-w-md',
@@ -7167,11 +7263,11 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetNavLink(_a) {
-  var active = _a.active,
-      href = _a.href,
-      children = _a.children;
-  var classes = active ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition';
+function JetNavLink(_ref) {
+  var active = _ref.active,
+      href = _ref.href,
+      children = _ref.children;
+  var classes = active ? 'inline-flex items-center px-1 pt-2 border-b-2 border-yellow-400 text-sm font-medium leading-5 text-white  focus:border-yellow-400 transition' : 'inline-flex items-center px-1 pt-2 border-b-2 border-yellow-400 text-sm font-medium leading-5 text-white hover:text-white hover:border-yellow-400  focus:text-white focus:border-yellow-400 transition';
   return react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: href,
     className: classes
@@ -7248,22 +7344,6 @@ exports["default"] = JetResponsiveNavLink;
 "use strict";
 
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
 var __rest = this && this.__rest || function (s, e) {
   var t = {};
 
@@ -7295,7 +7375,7 @@ function JetSecondaryButton(_a) {
   var children = _a.children,
       props = __rest(_a, ["children"]);
 
-  return react_1["default"].createElement("button", __assign({}, props, {
+  return react_1["default"].createElement("button", Object.assign({}, props, {
     className: (0, classnames_1["default"])('inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition', props.className)
   }), children);
 }
@@ -7360,9 +7440,9 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function JetSectionTitle(_a) {
-  var title = _a.title,
-      description = _a.description;
+function JetSectionTitle(_ref) {
+  var title = _ref.title,
+      description = _ref.description;
   return react_1["default"].createElement("div", {
     className: "md:col-span-1"
   }, react_1["default"].createElement("div", {
@@ -7401,9 +7481,12 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 
-function JetValidationErrors(_a) {
-  var className = _a.className;
-  var props = (0, inertia_react_1.usePage)().props;
+function JetValidationErrors(_ref) {
+  var className = _ref.className;
+
+  var _ref2 = (0, inertia_react_1.usePage)(),
+      props = _ref2.props;
+
   var errors = props.errors;
   var hasErrors = Object.keys(errors).length > 0;
 
@@ -7428,163 +7511,6 @@ exports["default"] = JetValidationErrors;
 
 /***/ }),
 
-/***/ "./resources/js/Jetstream/Welcome.tsx":
-/*!********************************************!*\
-  !*** ./resources/js/Jetstream/Welcome.tsx ***!
-  \********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var ApplicationLogo_1 = __importDefault(__webpack_require__(/*! @/Jetstream/ApplicationLogo */ "./resources/js/Jetstream/ApplicationLogo.tsx"));
-
-function Welcome() {
-  return react_1["default"].createElement("div", null, react_1["default"].createElement("div", {
-    className: "p-6 sm:px-20 bg-white border-b border-gray-200"
-  }, react_1["default"].createElement("div", null, react_1["default"].createElement(ApplicationLogo_1["default"], {
-    className: "block h-12 w-auto"
-  })), react_1["default"].createElement("div", {
-    className: "mt-8 text-2xl"
-  }, "Welcome to your Jetstream application!"), react_1["default"].createElement("div", {
-    className: "mt-6 text-gray-500"
-  }, "Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel ecosystem to be a breath of fresh air. We hope you love it.")), react_1["default"].createElement("div", {
-    className: "bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2"
-  }, react_1["default"].createElement("div", {
-    className: "p-6"
-  }, react_1["default"].createElement("div", {
-    className: "flex items-center"
-  }, react_1["default"].createElement("svg", {
-    fill: "none",
-    stroke: "currentColor",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "2",
-    viewBox: "0 0 24 24",
-    className: "w-8 h-8 text-gray-400"
-  }, react_1["default"].createElement("path", {
-    d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-  })), react_1["default"].createElement("div", {
-    className: "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-  }, react_1["default"].createElement("a", {
-    href: "https://laravel.com/docs"
-  }, "Documentation"))), react_1["default"].createElement("div", {
-    className: "ml-12"
-  }, react_1["default"].createElement("div", {
-    className: "mt-2 text-sm text-gray-500"
-  }, "Laravel has wonderful documentation covering every aspect of the framework. Whether you're new to the framework or have previous experience, we recommend reading all of the documentation from beginning to end."), react_1["default"].createElement("a", {
-    href: "https://laravel.com/docs"
-  }, react_1["default"].createElement("div", {
-    className: "mt-3 flex items-center text-sm font-semibold text-indigo-700"
-  }, react_1["default"].createElement("div", null, "Explore the documentation"), react_1["default"].createElement("div", {
-    className: "ml-1 text-indigo-500"
-  }, react_1["default"].createElement("svg", {
-    viewBox: "0 0 20 20",
-    fill: "currentColor",
-    className: "w-4 h-4"
-  }, react_1["default"].createElement("path", {
-    fillRule: "evenodd",
-    d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
-    clipRule: "evenodd"
-  }))))))), react_1["default"].createElement("div", {
-    className: "p-6 border-t border-gray-200 md:border-t-0 md:border-l"
-  }, react_1["default"].createElement("div", {
-    className: "flex items-center"
-  }, react_1["default"].createElement("svg", {
-    fill: "none",
-    stroke: "currentColor",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "2",
-    viewBox: "0 0 24 24",
-    className: "w-8 h-8 text-gray-400"
-  }, react_1["default"].createElement("path", {
-    d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-  }), react_1["default"].createElement("path", {
-    d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-  })), react_1["default"].createElement("div", {
-    className: "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-  }, react_1["default"].createElement("a", {
-    href: "https://laracasts.com"
-  }, "Laracasts"))), react_1["default"].createElement("div", {
-    className: "ml-12"
-  }, react_1["default"].createElement("div", {
-    className: "mt-2 text-sm text-gray-500"
-  }, "Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process."), react_1["default"].createElement("a", {
-    href: "https://laracasts.com"
-  }, react_1["default"].createElement("div", {
-    className: "mt-3 flex items-center text-sm font-semibold text-indigo-700"
-  }, react_1["default"].createElement("div", null, "Start watching Laracasts"), react_1["default"].createElement("div", {
-    className: "ml-1 text-indigo-500"
-  }, react_1["default"].createElement("svg", {
-    viewBox: "0 0 20 20",
-    fill: "currentColor",
-    className: "w-4 h-4"
-  }, react_1["default"].createElement("path", {
-    fillRule: "evenodd",
-    d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
-    clipRule: "evenodd"
-  }))))))), react_1["default"].createElement("div", {
-    className: "p-6 border-t border-gray-200"
-  }, react_1["default"].createElement("div", {
-    className: "flex items-center"
-  }, react_1["default"].createElement("svg", {
-    fill: "none",
-    stroke: "currentColor",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "2",
-    viewBox: "0 0 24 24",
-    className: "w-8 h-8 text-gray-400"
-  }, react_1["default"].createElement("path", {
-    d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-  })), react_1["default"].createElement("div", {
-    className: "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-  }, react_1["default"].createElement("a", {
-    href: "https://tailwindcss.com/"
-  }, "Tailwind"))), react_1["default"].createElement("div", {
-    className: "ml-12"
-  }, react_1["default"].createElement("div", {
-    className: "mt-2 text-sm text-gray-500"
-  }, "Laravel Jetstream is built with Tailwind, an amazing utility first CSS framework that doesn't get in your way. You'll be amazed how easily you can build and maintain fresh, modern designs with this wonderful framework at your fingertips."))), react_1["default"].createElement("div", {
-    className: "p-6 border-t border-gray-200 md:border-l"
-  }, react_1["default"].createElement("div", {
-    className: "flex items-center"
-  }, react_1["default"].createElement("svg", {
-    fill: "none",
-    stroke: "currentColor",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "2",
-    viewBox: "0 0 24 24",
-    className: "w-8 h-8 text-gray-400"
-  }, react_1["default"].createElement("path", {
-    d: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-  })), react_1["default"].createElement("div", {
-    className: "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-  }, "Authentication")), react_1["default"].createElement("div", {
-    className: "ml-12"
-  }, react_1["default"].createElement("div", {
-    className: "mt-2 text-sm text-black-500"
-  }, "Hello everyone")))));
-}
-
-exports["default"] = Welcome;
-
-/***/ }),
-
 /***/ "./resources/js/Layouts/AppLayout.tsx":
 /*!********************************************!*\
   !*** ./resources/js/Layouts/AppLayout.tsx ***!
@@ -7593,6 +7519,18 @@ exports["default"] = Welcome;
 
 "use strict";
 
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
@@ -7669,18 +7607,20 @@ var NavLink_1 = __importDefault(__webpack_require__(/*! @/Jetstream/NavLink */ "
 
 var ResponsiveNavLink_1 = __importDefault(__webpack_require__(/*! @/Jetstream/ResponsiveNavLink */ "./resources/js/Jetstream/ResponsiveNavLink.tsx"));
 
-function AppLayout(_a) {
-  var _b, _c, _d;
+function AppLayout(_ref) {
+  var title = _ref.title,
+      renderHeader = _ref.renderHeader,
+      children = _ref.children;
 
-  var title = _a.title,
-      renderHeader = _a.renderHeader,
-      children = _a.children;
+  var _a, _b, _c;
+
   var page = (0, useTypedPage_1["default"])();
   var route = (0, useRoute_1["default"])();
 
-  var _e = (0, react_1.useState)(false),
-      showingNavigationDropdown = _e[0],
-      setShowingNavigationDropdown = _e[1];
+  var _ref2 = (0, react_1.useState)(false),
+      _ref3 = _slicedToArray(_ref2, 2),
+      showingNavigationDropdown = _ref3[0],
+      setShowingNavigationDropdown = _ref3[1];
 
   function switchToTeam(e, team) {
     e.preventDefault();
@@ -7701,7 +7641,7 @@ function AppLayout(_a) {
   }), react_1["default"].createElement(Banner_1["default"], null), react_1["default"].createElement("div", {
     className: "min-h-screen bg-gray-100"
   }, react_1["default"].createElement("nav", {
-    className: "bg-white border-b border-gray-100"
+    className: "colorPrimary border-b border-gray-100"
   }, react_1["default"].createElement("div", {
     className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
   }, react_1["default"].createElement("div", {
@@ -7714,7 +7654,9 @@ function AppLayout(_a) {
     href: route('dashboard')
   }, react_1["default"].createElement(ApplicationMark_1["default"], {
     className: "block h-9 w-auto"
-  }))), react_1["default"].createElement("div", {
+  })), react_1["default"].createElement("p", {
+    className: 'me-2 text-white'
+  }, "Pet Supplies")), react_1["default"].createElement("div", {
     className: "hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
   }, react_1["default"].createElement(NavLink_1["default"], {
     href: route('dashboard'),
@@ -7757,7 +7699,7 @@ function AppLayout(_a) {
     className: "border-t border-gray-100"
   }), react_1["default"].createElement("div", {
     className: "block px-4 py-2 text-xs text-gray-400"
-  }, "Switch Teams"), (_b = page.props.user.all_teams) === null || _b === void 0 ? void 0 : _b.map(function (team) {
+  }, "Switch Teams"), (_a = page.props.user.all_teams) === null || _a === void 0 ? void 0 : _a.map(function (team) {
     return react_1["default"].createElement("form", {
       onSubmit: function onSubmit(e) {
         return switchToTeam(e, team);
@@ -7808,9 +7750,9 @@ function AppLayout(_a) {
     }
   }, react_1["default"].createElement("div", {
     className: "block px-4 py-2 text-xs text-gray-400"
-  }, "Manage Account"), react_1["default"].createElement(DropdownLink_1["default"], {
+  }, "Administrar Cuenta"), react_1["default"].createElement(DropdownLink_1["default"], {
     href: route('profile.show')
-  }, "Profile"), page.props.jetstream.hasApiFeatures ? react_1["default"].createElement(DropdownLink_1["default"], {
+  }, "Perfil"), page.props.jetstream.hasApiFeatures ? react_1["default"].createElement(DropdownLink_1["default"], {
     href: route('api-tokens.index')
   }, "API Tokens") : null, react_1["default"].createElement("div", {
     className: "border-t border-gray-100"
@@ -7818,7 +7760,7 @@ function AppLayout(_a) {
     onSubmit: logout
   }, react_1["default"].createElement(DropdownLink_1["default"], {
     as: "button"
-  }, "Log Out"))))), react_1["default"].createElement("div", {
+  }, "Cerrar Sesi\xF3n"))))), react_1["default"].createElement("div", {
     className: "-mr-2 flex items-center sm:hidden"
   }, react_1["default"].createElement("button", {
     onClick: function onClick() {
@@ -7869,15 +7811,15 @@ function AppLayout(_a) {
     src: page.props.user.profile_photo_url,
     alt: page.props.user.name
   })) : null, react_1["default"].createElement("div", null, react_1["default"].createElement("div", {
-    className: "font-medium text-base text-gray-800"
+    className: "font-medium text-base text-white"
   }, page.props.user.name), react_1["default"].createElement("div", {
-    className: "font-medium text-sm text-gray-500"
+    className: "font-medium text-sm text-white"
   }, page.props.user.email))), react_1["default"].createElement("div", {
-    className: "mt-3 space-y-1"
+    className: "mt-3 space-y-1 "
   }, react_1["default"].createElement(ResponsiveNavLink_1["default"], {
     href: route('profile.show'),
     active: route().current('profile.show')
-  }, "Profile"), page.props.jetstream.hasApiFeatures ? react_1["default"].createElement(ResponsiveNavLink_1["default"], {
+  }, "Perfil"), page.props.jetstream.hasApiFeatures ? react_1["default"].createElement(ResponsiveNavLink_1["default"], {
     href: route('api-tokens.index'),
     active: route().current('api-tokens.index')
   }, "API Tokens") : null, react_1["default"].createElement("form", {
@@ -7885,7 +7827,7 @@ function AppLayout(_a) {
     onSubmit: logout
   }, react_1["default"].createElement(ResponsiveNavLink_1["default"], {
     as: "button"
-  }, "Log Out")), page.props.jetstream.hasTeamFeatures ? react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("div", {
+  }, "Cerrar Sesi\xF3n")), page.props.jetstream.hasTeamFeatures ? react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("div", {
     className: "border-t border-gray-200"
   }), react_1["default"].createElement("div", {
     className: "block px-4 py-2 text-xs text-gray-400"
@@ -7899,7 +7841,7 @@ function AppLayout(_a) {
     className: "border-t border-gray-200"
   }), react_1["default"].createElement("div", {
     className: "block px-4 py-2 text-xs text-gray-400"
-  }, "Switch Teams"), (_d = (_c = page.props.user) === null || _c === void 0 ? void 0 : _c.all_teams) === null || _d === void 0 ? void 0 : _d.map(function (team) {
+  }, "Switch Teams"), (_c = (_b = page.props.user) === null || _b === void 0 ? void 0 : _b.all_teams) === null || _c === void 0 ? void 0 : _c.map(function (team) {
     return react_1["default"].createElement("form", {
       onSubmit: function onSubmit(e) {
         return switchToTeam(e, team);
@@ -7956,10 +7898,10 @@ var APITokenManager_1 = __importDefault(__webpack_require__(/*! @/Domains/API/AP
 
 var AppLayout_1 = __importDefault(__webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx"));
 
-function ApiTokenIndex(_a) {
-  var tokens = _a.tokens,
-      availablePermissions = _a.availablePermissions,
-      defaultPermissions = _a.defaultPermissions;
+function ApiTokenIndex(_ref) {
+  var tokens = _ref.tokens,
+      availablePermissions = _ref.availablePermissions,
+      defaultPermissions = _ref.defaultPermissions;
   return react_1["default"].createElement(AppLayout_1["default"], {
     title: 'API Tokens'
   }, react_1["default"].createElement("div", null, react_1["default"].createElement("div", {
@@ -8099,8 +8041,8 @@ var Label_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Label */ "./re
 
 var ValidationErrors_1 = __importDefault(__webpack_require__(/*! @/Jetstream/ValidationErrors */ "./resources/js/Jetstream/ValidationErrors.tsx"));
 
-function ForgotPassword(_a) {
-  var status = _a.status;
+function ForgotPassword(_ref) {
+  var status = _ref.status;
   var route = (0, useRoute_1["default"])();
   var form = (0, inertia_react_1.useForm)({
     email: ''
@@ -8186,9 +8128,9 @@ var Label_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Label */ "./re
 
 var ValidationErrors_1 = __importDefault(__webpack_require__(/*! @/Jetstream/ValidationErrors */ "./resources/js/Jetstream/ValidationErrors.tsx"));
 
-function Login(_a) {
-  var canResetPassword = _a.canResetPassword,
-      status = _a.status;
+function Login(_ref) {
+  var canResetPassword = _ref.canResetPassword,
+      status = _ref.status;
   var route = (0, useRoute_1["default"])();
   var form = (0, inertia_react_1.useForm)({
     email: '',
@@ -8205,7 +8147,9 @@ function Login(_a) {
     });
   }
 
-  return react_1["default"].createElement(AuthenticationCard_1["default"], null, react_1["default"].createElement(inertia_react_1.Head, {
+  return react_1["default"].createElement("div", {
+    className: 'fondo'
+  }, react_1["default"].createElement(AuthenticationCard_1["default"], null, react_1["default"].createElement(inertia_react_1.Head, {
     title: "login"
   }), react_1["default"].createElement(ValidationErrors_1["default"], {
     className: "mb-4"
@@ -8261,12 +8205,14 @@ function Login(_a) {
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: route('register'),
     className: "underline text-sm text-gray-600 hover:text-gray-900"
-  }, "Necesitas una Cuenta?"), react_1["default"].createElement(Button_1["default"], {
+  }, "Necesitas una Cuenta?")), react_1["default"].createElement("div", {
+    className: 'flex items-center'
+  }, react_1["default"].createElement(Button_1["default"], {
     className: (0, classnames_1["default"])('ml-4', {
       'opacity-25': form.processing
-    }),
+    }, 'colorPrimary'),
     disabled: form.processing
-  }, "Entrar")))));
+  }, "Entrar"))))));
 }
 
 exports["default"] = Login;
@@ -8471,9 +8417,9 @@ var Label_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Label */ "./re
 
 var ValidationErrors_1 = __importDefault(__webpack_require__(/*! @/Jetstream/ValidationErrors */ "./resources/js/Jetstream/ValidationErrors.tsx"));
 
-function ResetPassword(_a) {
-  var token = _a.token,
-      email = _a.email;
+function ResetPassword(_ref) {
+  var token = _ref.token,
+      email = _ref.email;
   var route = (0, useRoute_1["default"])();
   var form = (0, inertia_react_1.useForm)({
     token: token,
@@ -8560,6 +8506,18 @@ exports["default"] = ResetPassword;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -8631,9 +8589,10 @@ var ValidationErrors_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Val
 function TwoFactorChallenge() {
   var route = (0, useRoute_1["default"])();
 
-  var _a = (0, react_1.useState)(false),
-      recovery = _a[0],
-      setRecovery = _a[1];
+  var _ref = (0, react_1.useState)(false),
+      _ref2 = _slicedToArray(_ref, 2),
+      recovery = _ref2[0],
+      setRecovery = _ref2[1];
 
   var form = (0, inertia_react_1.useForm)({
     code: '',
@@ -8746,8 +8705,8 @@ var AuthenticationCard_1 = __importDefault(__webpack_require__(/*! @/Jetstream/A
 
 var Button_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.tsx"));
 
-function VerifyEmail(_a) {
-  var status = _a.status;
+function VerifyEmail(_ref) {
+  var status = _ref.status;
   var route = (0, useRoute_1["default"])();
   var form = (0, inertia_react_1.useForm)({});
   var verificationLinkSent = status === 'verification-link-sent';
@@ -8805,25 +8764,12 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var Welcome_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Welcome */ "./resources/js/Jetstream/Welcome.tsx"));
-
 var AppLayout_1 = __importDefault(__webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx"));
 
 function Dashboard() {
   return react_1["default"].createElement(AppLayout_1["default"], {
-    title: "Dashboard",
-    renderHeader: function renderHeader() {
-      return react_1["default"].createElement("h2", {
-        className: "font-semibold text-xl text-gray-800 leading-tight"
-      }, "Dashboard");
-    }
-  }, react_1["default"].createElement("div", {
-    className: "py-12"
-  }, react_1["default"].createElement("div", {
-    className: "max-w-7xl mx-auto sm:px-6 lg:px-8"
-  }, react_1["default"].createElement("div", {
-    className: "bg-white overflow-hidden shadow-xl sm:rounded-lg"
-  }, react_1["default"].createElement(Welcome_1["default"], null)))));
+    title: "Dashboard"
+  });
 }
 
 exports["default"] = Dashboard;
@@ -8856,8 +8802,8 @@ var AuthenticationCardLogo_1 = __importDefault(__webpack_require__(/*! @/Jetstre
 
 var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 
-function PrivacyPolicy(_a) {
-  var policy = _a.policy;
+function PrivacyPolicy(_ref) {
+  var policy = _ref.policy;
   return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_1.Head, {
     title: "Privacy Policy"
   }), react_1["default"].createElement("div", {
@@ -8915,8 +8861,8 @@ var SectionBorder_1 = __importDefault(__webpack_require__(/*! @/Jetstream/Sectio
 
 var AppLayout_1 = __importDefault(__webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx"));
 
-function Show(_a) {
-  var sessions = _a.sessions;
+function Show(_ref) {
+  var sessions = _ref.sessions;
   var page = (0, useTypedPage_1["default"])();
   return react_1["default"].createElement(AppLayout_1["default"], {
     title: 'Profile',
@@ -8972,8 +8918,8 @@ var AuthenticationCardLogo_1 = __importDefault(__webpack_require__(/*! @/Jetstre
 
 var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 
-function TermsOfService(_a) {
-  var terms = _a.terms;
+function TermsOfService(_ref) {
+  var terms = _ref.terms;
   return react_1["default"].createElement("div", {
     className: "font-sans text-gray-900 antialiased"
   }, react_1["default"].createElement(inertia_react_1.Head, {
@@ -9024,11 +8970,11 @@ var useTypedPage_1 = __importDefault(__webpack_require__(/*! @/Hooks/useTypedPag
 
 var inertia_react_2 = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 
-function Welcome(_a) {
-  var canLogin = _a.canLogin,
-      canRegister = _a.canRegister,
-      laravelVersion = _a.laravelVersion,
-      phpVersion = _a.phpVersion;
+function Welcome(_ref) {
+  var canLogin = _ref.canLogin,
+      canRegister = _ref.canRegister,
+      laravelVersion = _ref.laravelVersion,
+      phpVersion = _ref.phpVersion;
   var route = (0, useRoute_1["default"])();
   var page = (0, useTypedPage_1["default"])();
   return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_2.Head, {
@@ -9064,22 +9010,6 @@ exports["default"] = Welcome;
 "use strict";
 
 
-var __assign = this && this.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -9113,11 +9043,11 @@ var appName = ((_a = window.document.getElementsByTagName('title')[0]) === null 
   resolve: function resolve(name) {
     return __webpack_require__("./resources/js/Pages sync recursive ^\\.\\/.*\\.tsx$")("./".concat(name, ".tsx"));
   },
-  setup: function setup(_a) {
-    var el = _a.el,
-        App = _a.App,
-        props = _a.props;
-    return (0, react_dom_1.render)(react_1["default"].createElement(App, __assign({}, props)), el);
+  setup: function setup(_ref) {
+    var el = _ref.el,
+        App = _ref.App,
+        props = _ref.props;
+    return (0, react_dom_1.render)(react_1["default"].createElement(App, Object.assign({}, props)), el);
   }
 });
 progress_1.InertiaProgress.init({
