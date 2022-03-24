@@ -70,6 +70,18 @@ class ProductController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function searchForName($letra)
+    {
+        $nombreProducto = Product::where('nombre_productos','like',$letra.'%')->get();
+        return $nombreProducto;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
