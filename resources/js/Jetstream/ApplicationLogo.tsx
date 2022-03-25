@@ -1,11 +1,7 @@
 import React from 'react';
 import Logo from './Logo'
-export default function JetApplicationLogo({
-  className,
-}: {
-  className?: string;
-}) {
+export default function JetApplicationLogo() {
   return (
-    <Logo></Logo>
+    <Logo/>
   );
 }

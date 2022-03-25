@@ -5856,12 +5856,10 @@ var AuthenticationCardLogo_1 = __importDefault(__webpack_require__(/*! @/Jetstre
 function JetAuthenticationCard(_ref) {
   var children = _ref.children;
   return react_1["default"].createElement("div", {
-    className: "min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100"
+    className: "min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 fondo"
   }, react_1["default"].createElement("div", {
     className: 'text-center'
-  }, react_1["default"].createElement(AuthenticationCardLogo_1["default"], null), react_1["default"].createElement("p", {
-    className: 'tituloLogo '
-  }, "Pet Supplies")), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement(AuthenticationCardLogo_1["default"], null)), react_1["default"].createElement("div", {
     className: "w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
   }, children));
 }
@@ -6123,6 +6121,54 @@ function JetButton(_a) {
 }
 
 exports["default"] = JetButton;
+
+/***/ }),
+
+/***/ "./resources/js/Jetstream/CardEmployer.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/Jetstream/CardEmployer.tsx ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var userImage_png_1 = __importDefault(__webpack_require__(/*! ../../css/images/userImage.png */ "./resources/css/images/userImage.png"));
+
+function default_1(_ref) {
+  var nombreEmpleado = _ref.nombreEmpleado,
+      codigoEmpleado = _ref.codigoEmpleado;
+  return react_1["default"].createElement("div", null, react_1["default"].createElement("div", {
+    className: "card"
+  }, react_1["default"].createElement("img", {
+    src: userImage_png_1["default"],
+    className: "card-img-top",
+    alt: "imagen de Empleado"
+  }), react_1["default"].createElement("div", {
+    className: "card-body"
+  }, react_1["default"].createElement("div", {
+    className: "card-title"
+  }, "Cod: ", codigoEmpleado), react_1["default"].createElement("h6", {
+    className: "card-text"
+  }, "Nombre: ", nombreEmpleado), react_1["default"].createElement("a", {
+    href: "#",
+    className: "btn colorPrimary text-white"
+  }, " Ver Detalles"))));
+}
+
+exports["default"] = default_1;
 
 /***/ }),
 
@@ -7267,7 +7313,7 @@ function JetNavLink(_ref) {
   var active = _ref.active,
       href = _ref.href,
       children = _ref.children;
-  var classes = active ? 'inline-flex items-center px-1 pt-2 border-b-2 border-yellow-400 text-sm font-medium leading-5 text-white  focus:border-yellow-400 transition' : 'inline-flex items-center px-1 pt-2 border-b-2 border-yellow-400 text-sm font-medium leading-5 text-white hover:text-white hover:border-yellow-400  focus:text-white focus:border-yellow-400 transition';
+  var classes = active ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-white focus:outline-none focus:border-indigo-700 transition' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition';
   return react_1["default"].createElement(inertia_react_1.InertiaLink, {
     href: href,
     className: classes
@@ -7636,9 +7682,7 @@ function AppLayout(_ref) {
     inertia_1.Inertia.post(route('logout'));
   }
 
-  return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_1.Head, {
-    title: title
-  }), react_1["default"].createElement(Banner_1["default"], null), react_1["default"].createElement("div", {
+  return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_1.Head, null, react_1["default"].createElement("title", null, title)), react_1["default"].createElement(Banner_1["default"], null), react_1["default"].createElement("div", {
     className: "min-h-screen bg-gray-100"
   }, react_1["default"].createElement("nav", {
     className: "colorPrimary border-b border-gray-100"
@@ -7661,7 +7705,10 @@ function AppLayout(_ref) {
   }, react_1["default"].createElement(NavLink_1["default"], {
     href: route('dashboard'),
     active: route().current('dashboard')
-  }, "Dashboard"))), react_1["default"].createElement("div", {
+  }, "Productos"), react_1["default"].createElement(NavLink_1["default"], {
+    href: route('employes'),
+    active: route().current('employes')
+  }, "Empleados"))), react_1["default"].createElement("div", {
     className: "hidden sm:flex sm:items-center sm:ml-6"
   }, react_1["default"].createElement("div", {
     className: "ml-3 relative"
@@ -7800,7 +7847,10 @@ function AppLayout(_ref) {
   }, react_1["default"].createElement(ResponsiveNavLink_1["default"], {
     href: route('dashboard'),
     active: route().current('dashboard')
-  }, "Dashboard")), react_1["default"].createElement("div", {
+  }, "Productos"), react_1["default"].createElement(ResponsiveNavLink_1["default"], {
+    href: route('employes'),
+    active: route().current('employes')
+  }, "Empleados")), react_1["default"].createElement("div", {
     className: "pt-4 pb-1 border-t border-gray-200"
   }, react_1["default"].createElement("div", {
     className: "flex items-center px-4"
@@ -8151,7 +8201,7 @@ function Login(_ref) {
     className: 'fondo'
   }, react_1["default"].createElement(AuthenticationCard_1["default"], null, react_1["default"].createElement(inertia_react_1.Head, {
     title: "login"
-  }), react_1["default"].createElement(ValidationErrors_1["default"], {
+  }, react_1["default"].createElement("title", null, "Login")), react_1["default"].createElement(ValidationErrors_1["default"], {
     className: "mb-4"
   }), status && react_1["default"].createElement("div", {
     className: "mb-4 font-medium text-sm text-green-600"
@@ -8767,12 +8817,70 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 var AppLayout_1 = __importDefault(__webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx"));
 
 function Dashboard() {
-  return react_1["default"].createElement(AppLayout_1["default"], {
+  return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement(AppLayout_1["default"], {
     title: "Dashboard"
-  });
+  }));
 }
 
 exports["default"] = Dashboard;
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Employes.tsx":
+/*!*****************************************!*\
+  !*** ./resources/js/Pages/Employes.tsx ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var employes_1 = __webpack_require__(/*! @/const/employes */ "./resources/js/const/employes.tsx");
+
+var CardEmployer_1 = __importDefault(__webpack_require__(/*! @/Jetstream/CardEmployer */ "./resources/js/Jetstream/CardEmployer.tsx"));
+
+var AppLayout_1 = __importDefault(__webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.tsx"));
+
+function default_1() {
+  return react_1["default"].createElement("div", null, react_1["default"].createElement(AppLayout_1["default"], {
+    title: "Empleados"
+  }, react_1["default"].createElement("div", {
+    className: "container"
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement("div", {
+    className: "mb-3 row"
+  }, react_1["default"].createElement("label", {
+    htmlFor: "formGroupExampleInput",
+    className: "form-label"
+  }, " "), react_1["default"].createElement("input", {
+    type: "text",
+    className: "form-control col",
+    id: "formGroupExampleInput",
+    placeholder: "Buscar por nombre"
+  }), react_1["default"].createElement("button", {
+    type: "button",
+    className: "btn btn-primary col col-lg-2"
+  }, "A\xF1adir empleado"))), react_1["default"].createElement("div", {
+    className: "row"
+  }, react_1["default"].createElement("div", {
+    className: "col-2"
+  }, employes_1.EMPLEADOS.map(function (card) {
+    return react_1["default"].createElement(CardEmployer_1["default"], Object.assign({}, card));
+  }))))));
+}
+
+exports["default"] = default_1;
 
 /***/ }),
 
@@ -8972,9 +9080,7 @@ var inertia_react_2 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 function Welcome(_ref) {
   var canLogin = _ref.canLogin,
-      canRegister = _ref.canRegister,
-      laravelVersion = _ref.laravelVersion,
-      phpVersion = _ref.phpVersion;
+      canRegister = _ref.canRegister;
   var route = (0, useRoute_1["default"])();
   var page = (0, useTypedPage_1["default"])();
   return react_1["default"].createElement("div", null, react_1["default"].createElement(inertia_react_2.Head, {
@@ -9053,6 +9159,29 @@ var appName = ((_a = window.document.getElementsByTagName('title')[0]) === null 
 progress_1.InertiaProgress.init({
   color: '#4B5563'
 });
+
+/***/ }),
+
+/***/ "./resources/js/const/employes.tsx":
+/*!*****************************************!*\
+  !*** ./resources/js/const/employes.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.EMPLEADOS = void 0;
+exports.EMPLEADOS = [{
+  nombreEmpleado: "José Pérez",
+  codigoEmpleado: 24124
+}, {
+  nombreEmpleado: "Juan Rosales",
+  codigoEmpleado: 23123
+}];
 
 /***/ }),
 
@@ -9424,6 +9553,21 @@ var deepmerge_1 = deepmerge;
 
 module.exports = deepmerge_1;
 
+
+/***/ }),
+
+/***/ "./resources/css/images/userImage.png":
+/*!********************************************!*\
+  !*** ./resources/css/images/userImage.png ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/userImage.png?42195981b39bcc4f309fc24eee3b9b10");
 
 /***/ }),
 
@@ -62365,6 +62509,7 @@ var map = {
 	"./Auth/TwoFactorChallenge.tsx": "./resources/js/Pages/Auth/TwoFactorChallenge.tsx",
 	"./Auth/VerifyEmail.tsx": "./resources/js/Pages/Auth/VerifyEmail.tsx",
 	"./Dashboard.tsx": "./resources/js/Pages/Dashboard.tsx",
+	"./Employes.tsx": "./resources/js/Pages/Employes.tsx",
 	"./PrivacyPolicy.tsx": "./resources/js/Pages/PrivacyPolicy.tsx",
 	"./Profile/Show.tsx": "./resources/js/Pages/Profile/Show.tsx",
 	"./TermsOfService.tsx": "./resources/js/Pages/TermsOfService.tsx",

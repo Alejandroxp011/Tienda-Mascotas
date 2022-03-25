@@ -8,15 +8,13 @@ import { Head } from '@inertiajs/inertia-react';
 interface Props {
   canLogin: boolean;
   canRegister: boolean;
-  laravelVersion: string;
-  phpVersion: string;
+
 }
 
 export default function Welcome({
   canLogin,
   canRegister,
-  laravelVersion,
-  phpVersion,
+
 }: Props) {
   const route = useRoute();
   const page = useTypedPage();

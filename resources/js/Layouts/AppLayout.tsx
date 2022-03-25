@@ -48,7 +48,7 @@ export default function AppLayout({
 
   return (
     <div>
-      <Head title={title} />
+      <Head><title>{title}</title></Head>
 
       <JetBanner />
 
@@ -60,13 +60,13 @@ export default function AppLayout({
               <div className="flex">
                 {/* <!-- Logo --> */}
                 <div className="flex-shrink-0 flex items-center">
-                
+
                   <InertiaLink href={route('dashboard')}>
-                    
+
                     <JetApplicationMark className="block h-9 w-auto" />
-                    
+
                   </InertiaLink>
-                  
+
                   <p className='me-2 text-white'>Pet Supplies</p>
                 </div>
 
@@ -76,8 +76,15 @@ export default function AppLayout({
                     href={route('dashboard')}
                     active={route().current('dashboard')}
                   >
-                    Dashboard
+                    Productos
                   </JetNavLink>
+                    <JetNavLink
+                        href={route('employes')}
+                        active={route().current('employes')}
+                    >
+                        Empleados
+                    </JetNavLink>
+
                 </div>
               </div>
 
@@ -135,7 +142,7 @@ export default function AppLayout({
                               </JetDropdownLink>
                             ) : null}
 
-                            <div className="border-t border-gray-100"></div>
+                            <div className="border-t border-gray-100"/>
 
                             {/* <!-- Team Switcher --> */}
                             <div className="block px-4 py-2 text-xs text-gray-400">
@@ -160,7 +167,7 @@ export default function AppLayout({
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
                                       >
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                       </svg>
                                     )}
                                     <div>{team.name}</div>
@@ -229,7 +236,7 @@ export default function AppLayout({
                       </JetDropdownLink>
                     ) : null}
 
-                    <div className="border-t border-gray-100"></div>
+                    <div className="border-t border-gray-100"/>
 
                     {/* <!-- Authentication --> */}
                     <form onSubmit={logout}>
@@ -291,8 +298,14 @@ export default function AppLayout({
                 href={route('dashboard')}
                 active={route().current('dashboard')}
               >
-                Dashboard
+                Productos
               </JetResponsiveNavLink>
+                <JetResponsiveNavLink
+                    href={route('employes')}
+                    active={route().current('employes')}
+                >
+                    Empleados
+                </JetResponsiveNavLink>
             </div>
 
             {/* <!-- Responsive Settings Options --> */}
@@ -345,7 +358,7 @@ export default function AppLayout({
                 {/* <!-- Team Management --> */}
                 {page.props.jetstream.hasTeamFeatures ? (
                   <>
-                    <div className="border-t border-gray-200"></div>
+                    <div className="border-t border-gray-200"/>
 
                     <div className="block px-4 py-2 text-xs text-gray-400">
                       Manage Team
@@ -370,7 +383,7 @@ export default function AppLayout({
                       </JetResponsiveNavLink>
                     ) : null}
 
-                    <div className="border-t border-gray-200"></div>
+                    <div className="border-t border-gray-200"/>
 
                     {/* <!-- Team Switcher --> */}
                     <div className="block px-4 py-2 text-xs text-gray-400">
@@ -390,7 +403,7 @@ export default function AppLayout({
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                               >
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                               </svg>
                             )}
                             <div>{team.name}</div>

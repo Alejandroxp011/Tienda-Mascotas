@@ -5,9 +5,9 @@ export default function JetAuthenticationCardLogo() {
   return (
     <InertiaLink href="/">
       <div>
-      <Logo></Logo>
+      <Logo/>
       </div>
-       
+
     </InertiaLink>
   );
 }
