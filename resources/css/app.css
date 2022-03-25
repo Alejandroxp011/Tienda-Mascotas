@@ -1,4 +1,24 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import 'bootstrap'
+@import 'bootstrap';
+
+.colorPrimary{
+  background-color: #1cc623;
+}
+.tituloLogo{
+  font-size: xx-large;
+}
+
+.fondo{
+  
+  background-image: url(../css/images/wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #000;
+  height: 100vh;
+  width: 100%;
+  
+}
