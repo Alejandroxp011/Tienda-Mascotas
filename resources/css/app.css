@@ -11,5 +11,7 @@
 }
 
 .fondo{
-  background-image: url(../css/images/wallpaper.jpg)
+  background-image: url(../css/images/wallpaper.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
 }
